@@ -1,3 +1,44 @@
+<script setup lang="ts">
+import AppValidationErrors from '@/components/ValidationErrors'
+
+// export default {
+//   name: 'Register',
+//   components: {
+//     AppValidationErrors,
+//   },
+//   data(){
+//     return {
+//       email: "",
+//       password: "",
+//       username: ""
+//     }
+//   },
+//   computed: {
+//     isSubmitting(){
+//       return this.$store.state.auth.isSubmitting;
+//     },
+//     validationErrors(){
+//       return this.$store.state.auth.validationErrors;
+//     }
+//   },
+//   methods:{
+//     onSubmit(){
+//       console.log('submitted form');
+//       //this.$store.commit('registerStart');
+//       this.$store.dispatch('register', {
+//         email: this.email,
+//         username: this.username,
+//         password: this.password
+//       })
+//       .then(user => {
+//         console.log('successfully register user', user)
+//         this.$router.push({name: 'globalFeed'});
+//       })
+//     },
+//   },
+// }
+</script>
+
 <template>
   <div class="auth-page">
     <div class="container-page">
@@ -47,46 +88,7 @@
   </div>
 </template>
 
-<script>
-import AppValidationErrors from '@/components/ValidationErrors'
 
-export default {
-  name: 'Register',
-  components: {
-    AppValidationErrors,
-  },
-  data(){
-    return {
-      email: "",
-      password: "",
-      username: ""
-    }
-  },
-  computed: {
-    isSubmitting(){
-      return this.$store.state.auth.isSubmitting;
-    },
-    validationErrors(){
-      return this.$store.state.auth.validationErrors;
-    }
-  },
-  methods:{
-    onSubmit(){
-      console.log('submitted form');
-      //this.$store.commit('registerStart');
-      this.$store.dispatch('register', {
-        email: this.email,
-        username: this.username,
-        password: this.password
-      })
-      .then(user => {
-        console.log('successfully register user', user)
-        this.$router.push({name: 'globalFeed'});
-      })
-    },
-  },
-}
-</script>
 
 <style lang="css" scoped>
 </style>
