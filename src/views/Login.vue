@@ -1,3 +1,33 @@
+<script setup lang="ts">
+import ValidationErrors from '@src/scomponents/ValidationErrors'
+import { ref } from 'vue'
+
+const state = ref({
+  email: '',
+  password: '',
+})
+
+  // computed: {
+  //   ...mapState({
+  //     isSubmitting: state => state.auth.isSubmitting,
+  //     validationErrors: state => state.auth.validationErrors
+  //   })
+  // },
+  // methods: {
+  //   onSubmit(){
+  //     console.log('submitted form');
+  //     this.$store.dispatch('login', {
+  //       email: this.email,
+  //       password: this.password
+  //     })
+  //     .then(() => {
+  //       console.log('successfully logged in');
+  //       this.$router.push({name: 'globalFeed'});
+  //     })
+  //   }
+  // }
+</script>
+
 <template>
   <div class="auth-page">
     <div class="container-page">
@@ -7,7 +37,7 @@
           <p class="text-xs-center">
             <router-link :to="{name: 'register'}">Have an account?</router-link>
           </p>
-          <app-validation-errors
+          <ValidationError 
             v-if="validationErrors"
             :validation-errors="validationErrors"
           />
@@ -38,51 +68,6 @@
     </div>
   </div>
 </template>
-
-<script>
-import AppValidationErrors from '@/components/ValidationErrors'
-import {mapState} from 'vuex'
-
-export default {
-  name: 'Login',
-  components: {
-    AppValidationErrors,
-  },
-  data(){
-    return {
-      email: "",
-      password: ""
-    }
-  },
-  computed: {
-    ...mapState({
-      isSubmitting: state => state.auth.isSubmitting,
-      validationErrors: state => state.auth.validationErrors
-    })
-
-    //isSubmitting(){
-      //return this.$store.state.auth.isSubmitting;
-    //},
-    //validationErrors(){
-      //return this.$store.state.auth.validationErrors;
-    //}
-
-  },
-  methods: {
-    onSubmit(){
-      console.log('submitted form');
-      this.$store.dispatch('login', {
-        email: this.email,
-        password: this.password
-      })
-      .then(() => {
-        console.log('successfully logged in');
-        this.$router.push({name: 'globalFeed'});
-      })
-    }
-  }
-}
-</script>
 
 <style lang="css" scoped>
 </style>

@@ -1,3 +1,14 @@
+<script setup lang="ts">
+// import {mapGetters} from 'vuex'
+
+//   computed:{
+//     ...mapGetters({
+//         currentUser: 'currentUser',
+//         isLoggedIn: 'isLoggedIn',
+//         isAnonymous: 'isAnonymous'
+//       }),
+</script>
+
 <template>
   <nav class="navbar navbar-light">
     <div class="container">
@@ -67,17 +78,3 @@
   </nav>
 </template>
 
-<script>
-import {mapGetters} from 'vuex'
-
-export default {
-  name: 'AppTopbar',
-  computed:{
-    ...mapGetters({
-        currentUser: 'currentUser',
-        isLoggedIn: 'isLoggedIn',
-        isAnonymous: 'isAnonymous'
-      }),
-  },
-}
-</script>

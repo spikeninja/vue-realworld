@@ -1,11 +1,20 @@
+<script setup lang="ts">
+import { ref } from 'vue';
+import Feed from '@src/components/Feed.vue';
+
+const state = ref({
+  apiUrl: '/articles'
+})
+</script>
+
 <template>
   <div class="home-page">
     BANNER
     <div class="container">
       <div class="row">
         <div class="col-md-9">
-          <app-feed
-            :api-url="apiUrl"
+          <Feed
+            :api-url="state.apiUrl"
           />
         </div>
         <div class="col-md-3">
@@ -16,21 +25,6 @@
   </div>
 </template>
 
-<script>
-import AppFeed from '@/components/Feed'
-
-export default {
-  name: 'AppGlobalFeed',
-  components: {
-    AppFeed,
-  },
-  data(){
-    return {
-      apiUrl: '/articles',
-    }
-  },
-}
-</script>
 
 <style lang="css" scoped>
 </style>
