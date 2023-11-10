@@ -3,58 +3,72 @@ import { ref } from 'vue'
 import { stringify, parseUrl } from 'query-string'
 // import { actionTypes } from '@/store/modules/feed'
 
-import { limit } from '@src/helpers/vars'
 import Pagination from '@src/components/Pagination.vue'
+
+import { limit } from '@src/helpers/vars'
+import { computed } from '@vue/reactivity';
+import { useRoute } from 'vue-router';
+import { watch } from 'fs';
 
 
 const props = defineProps<{
-  apiUrl?: string
+  apiUrl?: string,
 }>()
 
-const state = ref({
+const route = useRoute()
+
+const data = ref({
+  offset: 5,
   limit: limit,
   url: '/tags/dragons',
 })
 
+const currentPage = ref<number>(Number(route.query.page || '1'))
 
+function fetchFeed() {
+  const parsedUrl = parseUrl(props.apiUrl)
+  const stringifiedParams = stringify({
+    limit,
+    offset: data.value.offset,
+    ...parsedUrl.query
+  })
+  const apiUrlWithParams = `${parsedUrl.url}?${stringifiedParams}`
+  // this.$store.dispatch(actionTypes.getFeed, { apiUrl: apiUrlWithParams })
+}
 
-  // computed: {
-  //   ...mapState({
-  //     isLoading: state => state.feed.isLoading,
-  //     feed: state => state.feed.data,
-  //     error: state => state.feed.error,
-  //   }),
-  //   currentPage() {
-  //     return Number(this.$route.query.page || '1')
-  //   },
-  //   baseUrl() {
-  //     return this.$route.path
-  //   },
-  //   offset() {
-  //     return this.currentPage * limit - limit
-  //   }
-  // },
-  // watch: {
-  //   // var we are watching at
-  //   currentPage() {
-  //     this.fetchFeed()
-  //   }
-  // },
-  // methods: {
-  //   fetchFeed() {
-  //     const parsedUrl = parseUrl(this.apiUrl)
-  //     const stringifiedParams = stringify({
-  //       limit,
-  //       offset: this.offset,
-  //       ...parsedUrl.query
-  //     })
-  //     const apiUrlWithParams = `${parsedUrl.url}?${stringifiedParams}`
-  //     this.$store.dispatch(actionTypes.getFeed, { apiUrl: apiUrlWithParams })
-  //   }
-  // },
-  // mounted() {
-  //   this.fetchFeed()
-  // }
+const baseUrl = computed(() => {
+  return route.path
+})
+
+const offset = computed(() => {
+  return currentPage.value * limit - limit
+})
+
+watch(currentPage, (newValue) => {
+  console.log("Value is updated")
+})
+
+// watch: {
+//   // var we are watching at
+//   currentPage() {
+//     this.fetchFeed()
+//   }
+// },
+// methods: {
+//   fetchFeed() {
+//     const parsedUrl = parseUrl(this.apiUrl)
+//     const stringifiedParams = stringify({
+//       limit,
+//       offset: this.offset,
+//       ...parsedUrl.query
+//     })
+//     const apiUrlWithParams = `${parsedUrl.url}?${stringifiedParams}`
+//     this.$store.dispatch(actionTypes.getFeed, { apiUrl: apiUrlWithParams })
+//   }
+// },
+// mounted() {
+//   this.fetchFeed()
+// }
 </script>
 
 <template>
@@ -93,7 +107,7 @@ const state = ref({
           TAG LIST
         </router-link>
       </div>
-      <app-pagination :total="feed.articlesCount" :limit="limit" :current-page="currentPage" :url="baseUrl" />
+      <Pagination :total="feed.articlesCount" :limit="limit" :current-page="currentPage" :url="baseUrl" />
     </div>
   </div>
 </template>
